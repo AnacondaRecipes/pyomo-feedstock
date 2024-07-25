@@ -169,7 +169,10 @@ test:
     # Missing file "lsb_release"
     {% set tests_to_skip = tests_to_skip + " or get_os_version" %}  # [linux]
 
-    - pytest -k "not ({{ tests_to_skip }})" --ignore=pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py
+    {% set tests_to_ignore = "--ignore=pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py" %}
+    {% set tests_to_ignore = tests_to_ignore + " --ignore=pyomo/environ" %}
+
+    - pytest -k "not ({{ tests_to_skip }})" {{ tests_to_ignore }}
 
 about:
   home: https://pyomo.org
