@@ -159,6 +159,8 @@ test:
     - pip check
     {% set tests_to_skip = "abstract_ch_pyomo_buildactions_fails_sh" %}
     {% set tests_to_skip = tests_to_skip + " or abstract_ch_pyomo_model" %}
+    # Missing file "lsb_release"
+    {% set tests_to_skip = tests_to_skip + " or get_os_version" %}  # [linux]
 
     - pytest -k "not ({{ tests_to_skip }})" --ignore=pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py
 
