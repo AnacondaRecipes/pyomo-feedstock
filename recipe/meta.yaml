@@ -1,28 +1,23 @@
-# Update with the following command
-#   conda skeleton pypi pyomo
-{% set version = "6.5.0" %}
+{% set version = "6.7.3" %}
+{% set name = "Pyomo" %}
 
 package:
-  name: pyomo
+  name: {{ name|lower }}
   version: {{ version }}
 
-source: # pypi md5
-  fn: Pyomo-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/P/Pyomo/Pyomo-{{ version }}.tar.gz
-  sha256: 5a23e775bba9fdbad22698fa1a841e662482edc979f2dea41cc6c54b1bb4b968
+source:
+  url: https://github.com/Pyomo/pyomo/archive/refs/tags/6.7.3.tar.gz
+  sha256: d31cdd1c63a80d39e51ff79b1e9dc10a1a0814fafe7f68777e682129e2179614
+
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --install-option=--with-distributable-extensions --no-deps -vv"
+  script: "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
   entry_points:
     - pyomo=pyomo.scripting.pyomo_main:main
 
 requirements:
   build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
-    - cython                                 # [build_platform != target_platform]
-    - pybind11                               # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
 
@@ -40,12 +35,6 @@ requirements:
 test:
   imports: # Note that there may be new imports
     - pyomo
-    - pyomo.checker
-    - pyomo.checker.plugins
-    - pyomo.checker.plugins.checkers
-    - pyomo.checker.plugins.checkers.model
-    - pyomo.checker.plugins.checkers.py3k
-    - pyomo.checker.plugins.checkers.sample
     - pyomo.common
     - pyomo.common.collections
     - pyomo.contrib
@@ -91,6 +80,8 @@ test:
     - pyomo.contrib.parmest.examples.rooney_biegler
     - pyomo.contrib.parmest.examples.semibatch
     - pyomo.contrib.parmest.utils
+    - pyomo.contrib.piecewise
+    - pyomo.contrib.piecewise.transform
     - pyomo.contrib.preprocessing
     - pyomo.contrib.preprocessing.plugins
     - pyomo.contrib.pynumero
@@ -108,6 +99,8 @@ test:
     - pyomo.contrib.satsolver
     - pyomo.contrib.sensitivity_toolbox
     - pyomo.contrib.sensitivity_toolbox.examples
+    - pyomo.contrib.simplification
+    - pyomo.contrib.simplification.ginac
     - pyomo.contrib.trustregion
     - pyomo.contrib.trustregion.examples
     - pyomo.contrib.viewer
@@ -154,16 +147,34 @@ test:
     - pyomo.solvers.plugins.solvers
     - pyomo.util
     - pyomo.version
-
+  source_files:
+    - .
+  requires:
+    - pip
+    - pytest
+    - parameterized
+    - pybind11
   commands:
     - pyomo --help
+    - pip check
+    {% set tests_to_skip = "abstract_ch_pyomo_buildactions_fails_sh" %}
+    {% set tests_to_skip = tests_to_skip + " or abstract_ch_pyomo_model" %}
+
+    - pytest -k "not ({{ tests_to_skip }})" --ignore=pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py
 
 about:
   home: http://pyomo.org
-  license: "BSD-3-Clause"
-  license_file: '{{ environ["RECIPE_DIR"] }}/Pyomo-LICENSE.txt'
-  summary: 'Pyomo: Python Optimization Modeling Objects'
+  dev_url: https://github.com/Pyomo/pyomo
+  doc_url: https://pyomo.readthedocs.io/
+  license: BSD-3-Clause
   license_family: BSD
+  license_file: LICENSE.md
+  summary: Python Optimization Modeling Objects
+  description: |
+    Pyomo is a Python-based open-source software package that supports a diverse set of
+    optimization capabilities for formulating and analyzing optimization models. Pyomo 
+    can be used to define symbolic problems, create concrete problem instances, and solve
+    these instances with standard solvers.
 
 extra:
   recipe-maintainers:
