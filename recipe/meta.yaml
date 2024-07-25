@@ -34,7 +34,7 @@ requirements:
     - ply
 
 test:
-  imports: # Note that there may be new imports
+  imports:
     - pyomo
     - pyomo.common
     - pyomo.common.collections
@@ -149,6 +149,7 @@ test:
     - pyomo.util
     - pyomo.version
   source_files:
+  # Tests are spread across many files throughout the source code.
     - .
   requires:
     - pip
