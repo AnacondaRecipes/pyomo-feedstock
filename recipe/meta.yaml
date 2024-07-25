@@ -32,6 +32,11 @@ requirements:
   run:
     - python
     - ply
+    - pywin32  # [win]
+  
+  run_constrained:
+    - matplotlib-base >=3.6.0,!=3.6.1
+    - numpy <2.0.0
 
 test:
   imports:
