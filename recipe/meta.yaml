@@ -166,7 +166,7 @@ test:
     - pytest -k "not ({{ tests_to_skip }})" --ignore=pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py
 
 about:
-  home: http://pyomo.org
+  home: https://pyomo.org
   dev_url: https://github.com/Pyomo/pyomo
   doc_url: https://pyomo.readthedocs.io/
   license: BSD-3-Clause
