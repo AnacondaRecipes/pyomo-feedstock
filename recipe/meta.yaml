@@ -12,7 +12,8 @@ source:
 
 build:
   number: 0
-  script: "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
+  script_env: PYOMO_SETUP_ARGS=--with-distributable-extensions
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - pyomo=pyomo.scripting.pyomo_main:main
 
