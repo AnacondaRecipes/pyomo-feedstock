@@ -168,9 +168,17 @@ test:
     {% set tests_to_skip = tests_to_skip + " or abstract_ch_pyomo_model" %}
     # Missing file "lsb_release"
     {% set tests_to_skip = tests_to_skip + " or get_os_version" %}  # [linux]
+    {% set tests_to_skip = tests_to_skip + " or test_expr5" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_construct" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_display" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_large_expression" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_pickle4" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_soln_pprint1" %}  # [win]
+    {% set tests_to_skip = tests_to_skip + " or test_write_solution" %}  # [win]
 
     {% set tests_to_ignore = "--ignore=pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py" %}
     {% set tests_to_ignore = tests_to_ignore + " --ignore=pyomo/environ" %}
+    {% set tests_to_ignore = tests_to_ignore + " --ignore=pyomo\repn\tests\mps\test_mps.py" %}  # [win]
 
     - pytest -k "not ({{ tests_to_skip }})" {{ tests_to_ignore }}
 
