@@ -162,6 +162,7 @@ test:
     - pytest
     - parameterized
     - pybind11
+    - distro
   commands:
     - pyomo --help
     - pip check
