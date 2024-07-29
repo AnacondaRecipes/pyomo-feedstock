@@ -168,8 +168,6 @@ test:
     - pip check
     {% set tests_to_skip = "abstract_ch_pyomo_buildactions_fails_sh" %}
     {% set tests_to_skip = tests_to_skip + " or abstract_ch_pyomo_model" %}
-    # Missing file "lsb_release"
-    {% set tests_to_skip = tests_to_skip + " or get_os_version" %}  # [linux]
     {% set tests_to_skip = tests_to_skip + " or test_expr5" %}  # [win]
     {% set tests_to_skip = tests_to_skip + " or test_construct" %}  # [win]
     {% set tests_to_skip = tests_to_skip + " or test_display" %}  # [win]
