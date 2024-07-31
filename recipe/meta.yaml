@@ -155,7 +155,7 @@ test:
     - pyomo.util
     - pyomo.version
   source_files:
-  # Tests are spread across many files throughout the source code.
+  # Removing source_files results in ~500 test failures for files not found.
     - .
   requires:
     - pip
