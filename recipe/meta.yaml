@@ -176,11 +176,13 @@ test:
     {% set tests_to_skip = tests_to_skip + " or test_soln_pprint1" %}  # [win]
     {% set tests_to_skip = tests_to_skip + " or test_write_solution" %}  # [win]
 
-    {% set tests_to_ignore = "--ignore=pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py" %}
-    {% set tests_to_ignore = tests_to_ignore + " --ignore=pyomo/environ" %}
-    {% set tests_to_ignore = tests_to_ignore + " --ignore=pyomo/repn/tests/mps/test_mps.py" %}  # [win]
+    {% set tests_to_ignore = "--ignore=${SP_DIR}/pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py" %}  # [not win]
+    {% set tests_to_ignore = "--ignore=%SP_DIR%/pyomo/solvers/tests/piecewise_linear/test_piecewise_linear_kernel.py" %}  # [win]
+    {% set tests_to_ignore = tests_to_ignore + " --ignore=${SP_DIR}/pyomo/environ" %}  # [not win]
+    {% set tests_to_ignore = tests_to_ignore + " --ignore=%SP_DIR%/pyomo/environ" %}  # [win]
+    {% set tests_to_ignore = tests_to_ignore + " --ignore=%SP_DIR%/pyomo/repn/tests/mps/test_mps.py" %}  # [win]
 
-    - pytest -k "not ({{ tests_to_skip }})" {{ tests_to_ignore }}
+    - pytest -k "not ({{ tests_to_skip }})" {{ tests_to_ignore }} --pyargs pyomo
 
 about:
   home: https://pyomo.org
