@@ -183,7 +183,7 @@ test:
     {% set tests_to_ignore = tests_to_ignore + " --ignore=%SP_DIR%/pyomo/repn/tests/mps/test_mps.py" %}  # [win]
 
     - pytest -k "not ({{ tests_to_skip }})" {{ tests_to_ignore }} --pyargs pyomo  # [not win]
-    - pytest -k "not ({{ tests_to_skip }})" {{ tests_to_ignore }}  # [not win]
+    - pytest -k "not ({{ tests_to_skip }})" {{ tests_to_ignore }}  # [win]
 
 about:
   home: https://pyomo.org
